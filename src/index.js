@@ -38,4 +38,3 @@ function renderDescr(data) {
     .join("");
   descr.insertAdjacentHTML("beforeend", markup);
 }
-// 

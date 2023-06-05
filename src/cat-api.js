@@ -1,7 +1,7 @@
-const choiceBreed = document.querySelector(".breed-select")
+//const choiceBreed = document.querySelector(".breed-select")
 const BASE_URL = "https://api.thecatapi.com/v1/breeds";
 const BASE_URL_BREED = " https://api.thecatapi.com/v1/images/search"
-const API = "live_yvRNh0JjOhImQR1oIieLkw9wCXaQXa4kjWnFncoszJF8sTZLE8utlexuelegmmU8";
+//const API = "live_yvRNh0JjOhImQR1oIieLkw9wCXaQXa4kjWnFncoszJF8sTZLE8utlexuelegmmU8";
 
 function fetchBreeds() {
   return fetch(`${BASE_URL}`)
