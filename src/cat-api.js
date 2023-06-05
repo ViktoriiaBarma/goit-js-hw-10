@@ -1,12 +1,11 @@
 //const choiceBreed = document.querySelector(".breed-select")
 const BASE_URL = "https://api.thecatapi.com/v1/breeds";
 const BASE_URL_BREED = " https://api.thecatapi.com/v1/images/search"
-//const API = "live_yvRNh0JjOhImQR1oIieLkw9wCXaQXa4kjWnFncoszJF8sTZLE8utlexuelegmmU8";
+const API = "live_yvRNh0JjOhImQR1oIieLkw9wCXaQXa4kjWnFncoszJF8sTZLE8utlexuelegmmU8";
 
 function fetchBreeds() {
-  return fetch(`${BASE_URL}`)
+  return fetch(`${BASE_URL}?api_key=${API}`)
     .then((response) => {
-       console.log(response);
       if (!response.ok) {
         throw new Error(response.status);
       }
@@ -16,16 +15,9 @@ function fetchBreeds() {
 }
 export { fetchBreeds }
 
-function fetchCatByBreed(breedId){
-     const params = new URLSearchParams({
-//     api_key: API,
-    breed_ids: breedId,
-//     //page,
-//     //limit: 3,
-  });
-  return fetch(`${BASE_URL_BREED}?${params}`)
+export function fetchCatByBreed(breedId){
+  return fetch(`${BASE_URL_BREED}?api_key=${API}&breed_ids=${breedId}`)
     .then((response) => {
-       console.log(response);
       if (!response.ok) {
         throw new Error(response.status);
       }
@@ -33,4 +25,4 @@ function fetchCatByBreed(breedId){
     })
     .catch((error) => console.log(error));
 }
-export { fetchCatByBreed }
+

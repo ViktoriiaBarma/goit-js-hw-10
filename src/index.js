@@ -1,40 +1,50 @@
-import { fetchBreeds } from "./cat-api.js";
-import { fetchCatByBreed } from "./cat-api.js";
+import { fetchBreeds, fetchCatByBreed } from './cat-api.js';
+import { Notify } from 'notiflix/build/notiflix-notify-aio';
 
-const select = document.querySelector(".breed-select")
-const descr = document.querySelector(".cat-info")
+const select = document.querySelector('.breed-select');
+const descr = document.querySelector('.cat-info');
+const loader = document.querySelector('.loader');
+select.addEventListener('change', getDescriptions);
 
-
-function getLists(query) {
-  fetchBreeds(query).then((data) => {
+fetchBreeds()
+  .then(data => {
     //console.log(data)
-    renderList(data)
-  });
-}
-getLists()
+    renderList(data);
+    select.classList.remove('is-hidden');
+  })
+  .catch(error => Notify.failure(error.message))
+  .finally(() => loader.classList.add('is-hidden'));
 
 function renderList(data) {
-  const markup = data.map(({ name }) => {
-      return `<option value="${name}">${name}
+  const markup = data
+    .map(({ name, id }) => {
+      return `<option value="${id}">${name}
 </option>`;
     })
-    .join("");
-  select.insertAdjacentHTML("beforeend", markup);
+    .join('');
+  select.insertAdjacentHTML('beforeend', markup);
 }
 
-function getDescriptions(query) {
-  fetchCatByBreed(query).then((data) =>
-    console.log(data),
-   // renderDescr(data)
-  )
+function getDescriptions(e) {
+  descr.innerHTML = '';
+  loader.classList.remove('is-hidden');
+  fetchCatByBreed(e.target.value)
+    .then(data => {
+      console.log(data);
+      renderDescr(data);
+    })
+    .catch(error => Notify.failure(error.message))
+    .finally(() => loader.classList.add('is-hidden'));
 }
-
-getDescriptions()
 
 function renderDescr(data) {
-  const markup = data.map(({ name, description, temperament }) => {
-      return `<h2>${name}</h2><p>${description}</p><p>${temperament}</p>`;
+  const imgUrl = data[0].url;
+  const markup = data[0].breeds
+    .map(({ name, description, temperament }) => {
+      return `<img src='${imgUrl}' alt='${name}' width='400'><h2>${name}</h2><p>${description}</p><p>${temperament}</p>`;
     })
-    .join("");
-  descr.insertAdjacentHTML("beforeend", markup);
+    .join('');
+  descr.insertAdjacentHTML('beforeend', markup);
 }
+
+
