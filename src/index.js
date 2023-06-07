@@ -41,7 +41,7 @@ function renderDescr(data) {
   const imgUrl = data[0].url;
   const markup = data[0].breeds
     .map(({ name, description, temperament }) => {
-      return `<img src='${imgUrl}' alt='${name}' width='400'><div class="descr"><h2>${name}</h2><p>${description}</p><p>${temperament}</p></div>`;
+      return `<img src='${imgUrl}' alt='${name}' width='400'><div class='descr'><h2>${name}</h2><p>${description}</p><p>${temperament}</p></div>`;
     })
     .join('');
   descr.insertAdjacentHTML('beforeend', markup);
